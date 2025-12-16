@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Poker Night – Fate Will Judge You</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+    --bg: #0b0b0b;
+    --card: #141414;
+    --accent: #d4af37;
+    --danger: #a83232;
+    --text: #f3f3f3;
+    --muted: #9e9e9e;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Georgia", serif;
+}
+
+body {
+    margin: 0;
+    background: radial-gradient(circle at top, #1a1a1a, var(--bg));
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* FLOATING SUITS */
+.suit {
+    position: fixed;
+    font-size: 30px;
+    opacity: 0.08;
+    animation: float 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    from { transform: translateY(110vh) rotate(0deg); }
+    to { transform: translateY(-120vh) rotate(360deg); }
+}
+
+.invite {
+    max-width: 850px;
+    background: linear-gradient(180deg, #1c1c1c, #0d0d0d);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 40px 30px;
+    box-shadow: 0 0 40px rgba(212,175,55,0.15);
+    position: relative;
+    animation: fadeIn 1.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    text-align: center;
+    font-size: 3.2rem;
+    letter-spacing: 6px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.tagline {
+    text-align: center;
+    font-size: 1.2rem;
+    background: rgba(212,175,55,0.12);
+    padding: 14px;
+    border: 1px dashed var(--accent);
+    margin-bottom: 30px;
+}
+
+/* COUNTDOWN */
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.time-box {
+    background: var(--card);
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 70px;
+}
+
+.time-box span {
+    display: block;
+    font-size: 1.6rem;
+    color: var(--accent);
+}
+
+.time-box small {
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.detail-box {
+    background: var(--card);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.detail-box span {
+    display: block;
+    color: var(--accent);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.rules {
+    background: rgba(255,255,255,0.03);
+    border-left: 4px solid var(--accent);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.rules p {
+    margin: 8px 0;
+}
+
+.rules strong {
+    color: var(--danger);
+}
+
+/* FAKE SHUFFLE */
+.shuffle {
+    text-align: center;
+    font-size: 2rem;
+    letter-spacing: 6px;
+    animation: shuffle 1.2s infinite;
+    margin-bottom: 25px;
+}
+
+@keyframes shuffle {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+.oracle {
+    text-align: center;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.riddle {
+    background: #101010;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid rgba(212,175,55,0.25);
+}
+
+button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 12px 28px;
+    background: var(--accent);
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    box-shadow: 0 0 15px rgba(212,175,55,0.4);
+}
+
+.answer {
+    display: none;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+footer {
+    text-align: center;
+    margin-top: 35px;
+    font-size: 0.75rem;
+    color: #777;
+}
+
+@media (max-width: 600px) {
+    h1 { font-size: 2.4rem; }
+    .details { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- FLOATING SUITS -->
+<div class="suit" style="left:10%;animation-delay:0s">♠</div>
+<div class="suit" style="left:30%;animation-delay:5s">♦</div>
+<div class="suit" style="left:50%;animation-delay:2s">♣</div>
+<div class="suit" style="left:70%;animation-delay:7s">♥</div>
+<div class="suit" style="left:85%;animation-delay:3s">♠</div>
+
+<div class="invite">
+    <h1>POKER NIGHT</h1>
+    <div class="subtitle">A Night of Cards, Chance & Poor Life Choices</div>
+
+    <div class="tagline">
+        “Gentlemen and Ladies, let us Have a Fackin Beverage”
+    </div>
+
+    <div class="countdown">
+        <div class="time-box"><span id="days">0</span><small>DAYS</small></div>
+        <div class="time-box"><span id="hours">0</span><small>HRS</small></div>
+        <div class="time-box"><span id="minutes">0</span><small>MIN</small></div>
+        <div class="time-box"><span id="seconds">0</span><small>SEC</small></div>
+    </div>
+
+    <div class="shuffle">♠ ♣ ♦ ♥</div>
+
+    <div class="details">
+        <div class="detail-box">
+            <span>DATE</span>
+            20th December 2025
+        </div>
+        <div class="detail-box">
+            <span>TIME</span>
+            4:00 PM (arrive late, be judged)
+        </div>
+        <div class="detail-box">
+            <span>LOCATION</span>
+            5 Palm Drive, Phillipine
+        </div>
+        <div class="detail-box">
+            <span>RSVP</span>
+            Rory (do not ghost)
+        </div>
+    </div>
+
+    <div class="rules">
+        <p>♠ Try your luck.</p>
+        <p>♣ Read the table.</p>
+        <p>♦ Bluff responsibly.</p>
+        <p>♥ Cold drinks mandatory.</p>
+        <p><strong>Buy-in:</strong> The drink of your choice. Cheap drinks will be mocked.</p>
+    </div>
+
+    <div class="oracle">
+        <p>The universe shuffles tonight.</p>
+        <p>Fate watches. Probability laughs.</p>
+        <p>Sit. Shuffle. Lose with dignity.</p>
+    </div>
+
+    <div class="riddle">
+        <p>
+            I am the highest in the deck, yet I have no value alone.<br>
+            I rule kings and queens, but sit silently on my own.<br><br>
+            <strong>Who am I?</strong>
+        </p>
+
+        <button onclick="revealAnswer()">Reveal Answer</button>
+        <div class="answer" id="answer">The Ace ♠</div>
+    </div>
+
+    <footer>
+        THE GAMBLER · Arcana of Risk · Fate · Fortune · Bad Decisions Since 4PM
+    </footer>
+</div>
+
+<script>
+function revealAnswer() {
+    const ans = document.getElementById("answer");
+    ans.style.display = ans.style.display === "block" ? "none" : "block";
+}
+
+// COUNTDOWN TIMER
+const eventDate = new Date("December 20, 2025 16:00:00").getTime();
+
+setInterval(() => {
+    const now = new Date().getTime();
+    const diff = eventDate - now;
+
+    if (diff <= 0) return;
+
+    document.getElementById("days").textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
+    document.getElementById("hours").textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    document.getElementById("minutes").textContent = Math.floor((diff / (1000 * 60)) % 60);
+    document.getElementById("seconds").textContent = Math.floor((diff / 1000) % 60);
+}, 1000);
+</script>
+
+</body>
+</html>
