@@ -197,6 +197,10 @@ button:hover {
     max-width:400px;
     text-align:center;
 }
+    
+.panel button {
+    margin: 6px;
+}
 
 /* FOOTER */
 footer {
@@ -260,6 +264,33 @@ footer {
 <p>♥ <strong>Buy-In:</strong> The drink of your choice.</p>
 </div>
 
+<div class="interactive">
+    <div class="panel">
+        <h3>🪙 Coin Flip</h3>
+        <p id="coinResult">Choose wisely.</p>
+        <button onclick="coinFlip('Heads')">Heads</button>
+        <button onclick="coinFlip('Tails')">Tails</button>
+    </div>
+
+    <div class="panel">
+        <h3>🎲 Dice Roll</h3>
+        <p id="diceResult">Roll if you dare.</p>
+        <button onclick="rollDice()">Roll Dice</button>
+    </div>
+
+    <div class="panel">
+        <h3>🃏 High Card</h3>
+        <p id="cardResult">Draw a card.</p>
+        <button onclick="drawCard()">Draw</button>
+    </div>
+
+    <div class="panel">
+        <h3>💀 Double or Nothing</h3>
+        <p id="doubleResult">This ends badly.</p>
+        <button onclick="doubleOrNothing()">Send It</button>
+    </div>
+</div>
+    
 <div class="interactive">
     <div class="panel">
         <h3>🍺 Drink Counter</h3>
@@ -356,6 +387,44 @@ function quiz(){
         ?"❌ Absolutely Not."
         :"✅ Still No, But Have Fun.";
 }
+/* GAMBLING GAMES */
+
+/* COIN FLIP */
+function coinFlip(choice){
+    const result = Math.random() > 0.5 ? "Heads" : "Tails";
+    document.getElementById("coinResult").textContent =
+        result === choice
+        ? "✅ You won. Don’t get cocky."
+        : "❌ You lost. Obviously.";
+}
+
+/* DICE */
+function rollDice(){
+    const roll = Math.floor(Math.random() * 6) + 1;
+    document.getElementById("diceResult").textContent =
+        roll >= 4
+        ? `🎉 You rolled a ${roll}. Acceptable.`
+        : `💸 You rolled a ${roll}. Embarrassing.`;
+}
+
+/* HIGH CARD */
+function drawCard(){
+    const cards = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+    const card = cards[Math.floor(Math.random() * cards.length)];
+    document.getElementById("cardResult").textContent =
+        ["K","A","Q","J"].includes(card)
+        ? `🃏 You drew ${card}. Respect.`
+        : `🪦 You drew ${card}. Fold.`;
+}
+
+/* DOUBLE OR NOTHING */
+function doubleOrNothing(){
+    document.getElementById("doubleResult").textContent =
+        Math.random() > 0.5
+        ? "🔥 You doubled up. Legend."
+        : "💀 You lost everything. As expected.";
+}
+
 </script>
 
 </body>
